@@ -21,34 +21,8 @@ if (!empty($_POST['login']) && !empty($_POST['pass']) ) {
         if($user['password'] == $saltedPassword) {
             session_start();
             $_SESSION['id'] = $user['id'];
-            if(isset($_SESSION['id'])) {
-                echo 'Hello ' . $user['login'] . '!';?>
-                <form method="post">
-                    Your new task: <input name="task">
-                    <button type="submit">Create</button>
-                </form>
-                <a href="logout.php">Logout</a> </br>
-                <?
-                if(isset ($_POST['task'])) {
-                    $task = $_POST['task'];
-                    $conn1 = mysqli_connect(
-                        'localhost',
-                        'root',
-                        '',
-                        'localhost_table'
-                    );
-                    $sql2 = 'INSERT INTO tasks (text, user_id) VALUES ("'.$task.'",'.$user['id'].')';
-                    if (mysqli_query($conn1, $sql2)) {
-                        echo "New record created successfully";
-                    } else {
-                        echo "Error: " . $sql2 . "<br>" . mysqli_error($conn1);
-                    }
-                    mysqli_close($conn1);
-                }
-
-            } else {
-                echo 'Something wrong';
-            }
+            $_SESSION['login'] = $user['login'];
+            header('location: createtask.php');
         } else {
             echo 'Wrong password!';
         }
@@ -56,4 +30,3 @@ if (!empty($_POST['login']) && !empty($_POST['pass']) ) {
         echo 'Invalid login, please, sign up';
     }
 }
-?>
