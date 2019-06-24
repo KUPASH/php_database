@@ -10,17 +10,19 @@ session_start();
 </head>
 <body>
 <?php
-if (isset($_GET['id'])) {
-    $id = $_GET['id'];
-    $conn = mysqli_connect(
-        'localhost',
-        'root',
-        '',
-        'localhost_table'
-    );
-    $sql = 'SELECT * FROM tasks WHERE id=' . $id .'';
-    $result = mysqli_query($conn, $sql);
-    $row = mysqli_fetch_assoc($result);
+if(isset($_SESSION['id']) && isset($_SESSION['login'])) {
+    if (isset($_GET['edit'])) {
+        $id = $_GET['edit'];
+        $conn = mysqli_connect(
+            'localhost',
+            'root',
+            '',
+            'localhost_table'
+        );
+        $sql = 'SELECT * FROM tasks WHERE id=' . $id . '';
+        $result = mysqli_query($conn, $sql);
+        $row = mysqli_fetch_assoc($result);
+    }
 }
 ?>
 

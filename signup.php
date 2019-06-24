@@ -2,35 +2,49 @@
 ini_set('display_errors', true);
 ini_set('display_startup_errors', true);
 error_reporting(E_ALL);
-function generateSalt() {
-    $salt = '';
-    $saltLength = 8;
-    for($i=0; $i<$saltLength; $i++) {
-        $salt .= chr(mt_rand(33,126));
-    }
-    return $salt;
-}
 
 if ( !empty($_POST['login']) && !empty($_POST['pass']) ) {
-    $login = $_POST['login'];
-    $password = $_POST['pass'];
-    $sql = 'SELECT * FROM users WHERE login="'.$login.'"';
     $conn = mysqli_connect(
         'localhost',
         'root',
         '',
         'localhost_table'
     );
-    $isLoginFree = mysqli_fetch_assoc(mysqli_query($conn, $sql));
-    if (empty($isLoginFree)) {
-        $salt = generateSalt();
+    $login = mysqli_real_escape_string($conn, $_POST['login']);
+    $password = mysqli_real_escape_string($conn, $_POST['pass']);
+    $sql = 'SELECT * FROM users WHERE login="'.$login.'"';
+    $user = mysqli_fetch_assoc(mysqli_query($conn, $sql));
+    if (empty($user)) {
+        $salt = 'idk6lviqLPnB4gR';
         $saltedPassword = md5($password.$salt);
-        $sql = 'INSERT INTO `users` (`login`, `password`, `salt`) VALUES ("'.$login.'","'.$saltedPassword.'","'.$salt.'")';
+        $sql = 'INSERT INTO `users` (`login`, `password`) VALUES ("'.$login.'","'.$saltedPassword.'")';
         mysqli_query($conn, $sql);
-        echo 'You are successfully registered! Now, please, log in the site.';
     } else {
-        echo 'This login is already taken!';
+        exit ('This login is already taken!');
     }
 } else {
-    echo 'Fields cannot be empty';
+    exit ('Fields cannot be empty');
+}
+if (!empty($_POST['login']) && !empty($_POST['pass']) ) {
+    $conn = mysqli_connect(
+        'localhost',
+        'root',
+        '',
+        'localhost_table'
+    );
+    $login = mysqli_real_escape_string($conn, $_POST['login']);
+    $password = mysqli_real_escape_string($conn, $_POST['pass']);
+    $sql = 'SELECT * FROM users WHERE login="'.$login.'"';
+    $user = mysqli_fetch_assoc(mysqli_query($conn, $sql));
+    mysqli_close($conn);
+    if (!empty($user)) {
+        $salt = 'idk6lviqLPnB4gR';
+        $saltedPassword = md5($password . $salt);
+        if ($user['password'] == $saltedPassword) {
+            session_start();
+            $_SESSION['id'] = $user['id'];
+            $_SESSION['login'] = $user['login'];
+            header('location: createtask.php');
+        }
+    }
 }

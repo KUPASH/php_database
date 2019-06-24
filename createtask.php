@@ -36,8 +36,8 @@ if(isset($_SESSION['id']) && isset($_SESSION['login'])) {
 
     while ($row = mysqli_fetch_assoc($result)) {
         echo '<tr><td>' . $row['text'] . '</td>
-                  <td><a href="delete.php?id='.$row['id'].'">X</a></td>
-                  <td><a href="modified.php?id='.$row['id'].'">Modified</a></td></tr>';
+                  <td><a href="delete.php?del='.$row['id'].'">X</a></td>
+                  <td><a href="modified.php?edit='.$row['id'].'">Modified</a></td></tr>';
 
     };
     echo '</table>';
