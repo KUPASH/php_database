@@ -25,7 +25,7 @@ if(isset($_SESSION['id']) && isset($_SESSION['login'])) {
     }
 
     echo '<table border="1">';
-    $sql = 'SELECT * FROM tasks WHERE user_id='.$_SESSION['id'].'';
+    $sql = 'SELECT * FROM tasks WHERE user_id='.$_SESSION['id'];
     $conn = mysqli_connect(
         'localhost',
         'root',

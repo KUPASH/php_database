@@ -14,7 +14,7 @@ if(isset($_SESSION['id']) && isset($_SESSION['login'])) {
             '',
             'localhost_table'
         );
-        $sql = 'UPDATE tasks SET text="' . $newline . '" WHERE id=' . $id . '';
+        $sql = 'UPDATE tasks SET text="' . $newline . '" WHERE id=' . $id;
         mysqli_query($conn, $sql);
         mysqli_close($conn);
     }

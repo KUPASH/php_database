@@ -13,7 +13,7 @@ if(isset($_SESSION['id']) && isset($_SESSION['login'])) {
             '',
             'localhost_table'
         );
-        $sql = 'DELETE FROM tasks WHERE id=' . $num_string . '';
+        $sql = 'DELETE FROM tasks WHERE id=' . $num_string;
         mysqli_query($conn, $sql);
 
     }
