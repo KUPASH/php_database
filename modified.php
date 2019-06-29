@@ -19,7 +19,7 @@ if(isset($_SESSION['id']) && isset($_SESSION['login'])) {
             '',
             'localhost_table'
         );
-        $sql = 'SELECT * FROM tasks WHERE user_id=' . $_SESSION['id'] . 'and id=' . $id;
+        $sql = 'SELECT * FROM tasks WHERE user_id="' . $_SESSION['id'] . '"AND id=' . $id;
         $result = mysqli_query($conn, $sql);
         $row = mysqli_fetch_assoc($result);
     }

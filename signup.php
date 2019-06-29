@@ -3,6 +3,7 @@ ini_set('display_errors', true);
 ini_set('display_startup_errors', true);
 error_reporting(E_ALL);
 
+require_once 'config.php';
 if ( !empty($_POST['login']) && !empty($_POST['pass']) ) {
     $conn = mysqli_connect(
         'localhost',
@@ -15,7 +16,6 @@ if ( !empty($_POST['login']) && !empty($_POST['pass']) ) {
     $sql = 'SELECT * FROM users WHERE login="'.$login.'"';
     $user = mysqli_fetch_assoc(mysqli_query($conn, $sql));
     if (empty($user)) {
-        $salt = 'idk6lviqLPnB4gR';
         $saltedPassword = md5($password.$salt);
         $sql = 'INSERT INTO `users` (`login`, `password`) VALUES ("'.$login.'","'.$saltedPassword.'")';
         mysqli_query($conn, $sql);

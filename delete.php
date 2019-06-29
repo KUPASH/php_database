@@ -13,9 +13,8 @@ if(isset($_SESSION['id']) && isset($_SESSION['login'])) {
             '',
             'localhost_table'
         );
-        $sql = 'DELETE FROM tasks WHERE user_id=' . $_SESSION['id'] . 'and id=' . $num_string;
+        $sql = 'DELETE FROM tasks WHERE user_id="' . $_SESSION['id'] . '"AND id=' . $num_string;
         mysqli_query($conn, $sql);
-
     }
 }
 header('Location: createtask.php');
